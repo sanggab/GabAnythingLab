@@ -14,4 +14,7 @@ struct GabAnythingLabTests {
         // Write your test here and use APIs like `#expect(...)` to check expected conditions.
     }
 
+    @Test func test() async throws {
+        
+    }
 }
