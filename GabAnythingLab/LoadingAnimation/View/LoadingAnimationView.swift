@@ -6,10 +6,23 @@
 //
 
 import SwiftUI
+import Combine
 
 struct LoadingAnimationView: View {
+    let timer = Timer.publish(every: 0.01, on: .current, in: .default, options: nil)
+    
+    @State private var cancel: Set<AnyCancellable> = []
+    
+    @State private var condition: Bool = true
+    
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+            .onAppear {
+                
+            }
+            .onReceive(timer) { output in
+                print("상갑 logEvent \(#function) output: \(output)")
+            }
     }
 }
 
