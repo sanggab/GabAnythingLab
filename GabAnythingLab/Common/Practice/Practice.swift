@@ -17,7 +17,7 @@ protocol ReducerInterface: ObservableObject {
 }
 
 protocol LAMReducer: ReducerInterface {
-    
+    static func test() -> String
 }
 
 protocol LAMFeatures {
@@ -45,12 +45,42 @@ class GabVM: LAMReducer {
     func action(_ action: Action) {
         
     }
-}
-
-class HI: LAMFeatures {
-    func eraseType() -> some LAMReducer {
-        return GabVM()
+    
+    static func test() -> String {
+        return ""
     }
 }
 
+struct GabZoneOption: OptionSet {
+    let rawValue: Int
+    
+    static let one = GabZoneOption(rawValue: 1 << 0)
+}
 
+protocol ZoneFeature {
+    associatedtype Reducer: GabReducer
+    
+//    var option: GabZoneOption { get set }
+    
+    static func testCase(option: GabZoneOption) -> Reducer
+}
+
+class GabSelectZone: ZoneFeature {
+    @ObservedObject private var viewModel = LoadingAnimationViewModel()
+    
+    static let shared = GabSelectZone()
+    
+//    var option: GabZoneOption
+//    
+//    public init(option: GabZoneOption) {
+//        self.option = option
+//    }
+    
+    static func testCase(option: GabZoneOption) -> some GabReducer {
+        return GabSelectZone().viewModel
+    }
+}
+
+extension PreviewTrait where T == Preview.ViewTraits {
+    @MainActor static var gabZone: Self = .modifier(CommonPreviewModifier<GabSelectZone>())
+}

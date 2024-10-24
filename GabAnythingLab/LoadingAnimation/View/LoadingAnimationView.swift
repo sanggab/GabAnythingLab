@@ -15,10 +15,12 @@ struct LoadingAnimationView: View {
     
     @State private var condition: Bool = true
     
+    @EnvironmentObject private var viewModel: LoadingAnimationViewModel
+    
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
             .onAppear {
-                
+                print("상갑 logEvent \(#function) hi: \(viewModel(\.hi))")
             }
             .onReceive(timer) { output in
                 print("상갑 logEvent \(#function) output: \(output)")
@@ -26,6 +28,10 @@ struct LoadingAnimationView: View {
     }
 }
 
-#Preview {
+//#Preview {
+//    LoadingAnimationView()
+//}
+
+#Preview(traits: .gabZone) {
     LoadingAnimationView()
 }

@@ -7,14 +7,14 @@
 //
 import SwiftUI
 
-struct CommonPreviewModifier<CASE: LAMReducer>: PreviewModifier {
-    typealias Context = CASE
+struct CommonPreviewModifier<Test: ZoneFeature>: PreviewModifier {
+    typealias Context = Test.Reducer
     
     static func makeSharedContext() async throws -> Context {
-//        return 
+        return Test.testCase(option: .one)
     }
     
     func body(content: Content, context: Context) -> some View {
-        
+        content.environmentObject(context)
     }
 }
