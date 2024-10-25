@@ -7,16 +7,16 @@
 
 import SwiftUI
 
-protocol KaPPaMain {
-    
-}
-
-protocol KaPPaFeature {
-    associatedtype Reducer: GabReducer
-    func getReducer() -> Reducer
-}
-
-protocol KaPPaGeneric {
-    associatedtype Feature: KaPPaFeature
-    static func makeFeature() -> Feature
-}
+//protocol KaPPaMain {
+//    
+//}
+//
+//protocol KaPPaFeature {
+//    associatedtype Reducer: GabReducer
+//    func getReducer() -> Reducer
+//}
+//
+//protocol KaPPaGeneric {
+//    associatedtype Feature: KaPPaFeature
+//    static func makeFeature() -> Feature
+//}

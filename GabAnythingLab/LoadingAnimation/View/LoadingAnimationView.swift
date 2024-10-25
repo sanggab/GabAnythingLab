@@ -25,6 +25,7 @@ struct LoadingAnimationView: View {
             .onReceive(timer) { output in
                 print("상갑 logEvent \(#function) output: \(output)")
             }
+            .modifier(GabInputModifier(zones: [.gab, .kappa]))
     }
 }
 
