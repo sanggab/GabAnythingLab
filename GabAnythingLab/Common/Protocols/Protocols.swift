@@ -15,3 +15,43 @@ public protocol GabReducer: ObservableObject {
     
     func action(_ action: Action)
 }
+
+class SampleReducer: GabReducer {
+    struct State: Equatable {
+        
+    }
+    
+    enum Action: Equatable {
+        
+    }
+    
+    @Published private var state: State = .init()
+    
+    func callAsFunction<V>(_ keyPath: KeyPath<State, V>) -> V where V : Equatable {
+        return state[keyPath: keyPath]
+    }
+    
+    func action(_ action: Action) {
+        
+    }
+}
+//
+//
+//class GabLab: KaPPaFeature {
+//    
+//    var option: GabZoneOption
+//    
+//    init(option: GabZoneOption) {
+//        self.option = option
+//    }
+//    
+//    
+//    func getReducer() -> some GabReducer {
+//        switch option {
+//        case .one:
+//            return LoadingAnimationViewModel()
+//        default:
+//            return SampleReducer()
+//        }
+//    }
+//}
