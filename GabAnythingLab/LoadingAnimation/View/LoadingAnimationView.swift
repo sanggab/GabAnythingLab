@@ -15,24 +15,24 @@ struct LoadingAnimationView: View {
     
     @State private var condition: Bool = true
     
-    @EnvironmentObject private var viewModel: LoadingAnimationViewModel
+//    @EnvironmentObject private var viewModel: LoadingAnimationViewModel
     
     var body: some View {
         Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
             .onAppear {
-                print("상갑 logEvent \(#function) hi: \(viewModel(\.hi))")
+//                print("상갑 logEvent \(#function) hi: \(viewModel(\.hi))")
             }
             .onReceive(timer) { output in
                 print("상갑 logEvent \(#function) output: \(output)")
             }
-            .modifier(GabInputModifier(zones: [.gab, .kappa]))
+//            .modifier(GabInputModifier(zones: [.gab, .kappa]))
     }
 }
 
-//#Preview {
-//    LoadingAnimationView()
-//}
-
-#Preview(traits: .gabZone) {
+#Preview {
     LoadingAnimationView()
 }
+
+//#Preview(traits: .gabZone) {
+//    LoadingAnimationView()
+//}
