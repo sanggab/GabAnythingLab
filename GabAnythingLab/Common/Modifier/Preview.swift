@@ -1,12 +1,12 @@
-//////
-//////  Preview.swift
-//////  GabAnythingLab
-//////
-//////  Created by Gab on 10/24/24.
-//////
-////
-//import SwiftUI
 //
+//  Preview.swift
+//  GabAnythingLab
+//
+//  Created by Gab on 10/24/24.
+//
+
+import SwiftUI
+
 //struct CommonPreviewModifier<Feature: ZoneFeature>: PreviewModifier {
 //    typealias Context = Feature.Reducer
 //    
@@ -50,3 +50,16 @@
 ////        return content.environmentObject(context.getReducer())
 ////    }
 ////}
+
+struct CommonPreviewModifier: PreviewModifier {
+    typealias Context = ViewModelManager
+    
+    static func makeSharedContext() async throws -> Context {
+        return ViewModelManager()
+    }
+    
+    func body(content: Content, context: Context) -> some View {
+//        AnyView(content.environmentObject(context.getReducer(option: .kappa)))
+        content
+    }
+}

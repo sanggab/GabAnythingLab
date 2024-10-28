@@ -7,14 +7,14 @@
 //
 //import SwiftUI
 //
-//struct GabZoneOption: OptionSet, Equatable {
-//    let rawValue: Int
-//    
-//    static let one = GabZoneOption(rawValue: 1 << 0)
-//    static let sample = GabZoneOption(rawValue: 2 << 0)
-//    static let gab = GabZoneOption(rawValue: 3 << 0)
-//    static let kappa = GabZoneOption(rawValue: 4 << 0)
-//}
+struct GabZoneOption: OptionSet, Equatable {
+    let rawValue: Int
+    
+    static let one = GabZoneOption(rawValue: 1 << 0)
+    static let sample = GabZoneOption(rawValue: 2 << 0)
+    static let gab = GabZoneOption(rawValue: 3 << 0)
+    static let kappa = GabZoneOption(rawValue: 4 << 0)
+}
 //
 //public enum GabZoneType: Equatable {
 //    case one

@@ -7,28 +7,42 @@
 
 import SwiftUI
 
-class KappaViewModel: GabReducer, ExtractReducer {
-    struct State: Equatable {
-        
-    }
+//class KappaViewModel: GabReducer {
+//    struct State: Equatable {
+//        
+//    }
+//    
+//    struct Action: Equatable {
+//        
+//    }
+//    
+//    @Published private var state: State = .init()
+//    
+//    func callAsFunction<V>(_ keyPath: KeyPath<State, V>) -> V where V : Equatable {
+//        return state[keyPath: keyPath]
+//    }
+//    
+//    func action(_ action: Action) {
+//        
+//    }
+//}
+
+protocol ReducerInterface {
     
-    struct Action: Equatable {
-        
-    }
-    
-    @Published private var state: State = .init()
-    
-    func callAsFunction<V>(_ keyPath: KeyPath<State, V>) -> V where V : Equatable {
-        return state[keyPath: keyPath]
-    }
-    
-    func action(_ action: Action) {
-        
-    }
 }
-// ExtraReducer
-extension KappaViewModel {
-    func getReducer() -> some GabReducer {
-        return self
-    }
+
+class MainReducer: ReducerInterface {
+    
+}
+
+class HistoryReducer: ReducerInterface {
+    
+}
+
+class MessageReducer: ReducerInterface {
+    
+}
+
+class MyPageReducer: ReducerInterface {
+    
 }
