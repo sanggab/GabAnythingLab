@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-enum ReducerType {
+enum ReducerType: Equatable {
     case main
     case history
     case message
     case mypage
 }
+
