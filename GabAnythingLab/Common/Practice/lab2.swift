@@ -26,23 +26,3 @@ import SwiftUI
 //        
 //    }
 //}
-
-protocol ReducerInterface {
-    
-}
-
-class MainReducer: ReducerInterface {
-    
-}
-
-class HistoryReducer: ReducerInterface {
-    
-}
-
-class MessageReducer: ReducerInterface {
-    
-}
-
-class MyPageReducer: ReducerInterface {
-    
-}
