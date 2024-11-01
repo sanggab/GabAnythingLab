@@ -31,7 +31,9 @@ struct LoadingAnimationView: View {
     }
     
     var body: some View {
-        main2
+        LingShape()
+            .stroke(.mint, lineWidth: 5)
+            .frame(width: 100, height: 100)
     }
     
     
@@ -85,10 +87,7 @@ struct LoadingAnimationView: View {
                         endAngle: .degrees(360),
                         clockwise: true)
         }
-//        .trimmedPath(from: order.trim.from, to: order.trim.to)
         .trim(from: order.trim.from, to: order.trim.to)
-        .stroke(Color.mint, lineWidth: 5)
-//        .rotationEffect(.degrees(360))
         .animation(.easeInOut(duration: 1), value: order)
         .onAppear {
             setTimer()
@@ -108,7 +107,7 @@ struct LoadingAnimationView: View {
         if testCancellable == nil {
             testCancellable = self.timer.connect()
         } else {
-            self.timer = Timer.publish(every: 1, on: .current, in: .default, options: nil)
+            self.timer = Timer.publish(every: 1.5, on: .current, in: .default, options: nil)
             testCancellable = self.timer.connect()
         }
     }
