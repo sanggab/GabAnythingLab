@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct LoadingAnimationView: View {
-    @State var timer = Timer.publish(every: 1.5, on: .current, in: .default, options: nil)
+    @State var timer = Timer.publish(every: 1, on: .current, in: .default, options: nil)
     
     @State private var cancellables: Set<AnyCancellable> = []
     
@@ -21,6 +21,8 @@ struct LoadingAnimationView: View {
     @State private var degree = 0.0
     
     @State private var testCancellable: Cancellable?
+    
+    @State private var order: LoadingAnimationOrder = .none
     
     @EnvironmentObject private var viewModel: LoadingAnimationViewModel
     
@@ -83,18 +85,21 @@ struct LoadingAnimationView: View {
                         endAngle: .degrees(360),
                         clockwise: true)
         }
-        .trim(from: count, to: count2)
+//        .trimmedPath(from: order.trim.from, to: order.trim.to)
+        .trim(from: order.trim.from, to: order.trim.to)
         .stroke(Color.mint, lineWidth: 5)
 //        .rotationEffect(.degrees(360))
-        .animation(.easeInOut(duration: 1.5))
+        .animation(.easeInOut(duration: 1), value: order)
         .onAppear {
             setTimer()
         }
         .onReceive(timer) { output in
-            if count2 == .zero {
-                count2 = 1
+            if order == .none {
+                order = .one
+            } else if order == .one {
+                order = .two
             } else {
-                count = 1
+                order = .none
             }
         }
     }
