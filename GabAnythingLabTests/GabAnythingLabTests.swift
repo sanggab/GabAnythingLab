@@ -30,6 +30,13 @@ extension GabAnythingLabTests {
     @Test("LingShape Test")
     func lingShapeTest() async throws {
         print("상갑 logEvent \(#function)")
+        let viewModel = LingShapeViewModel()
+        
+        try #require(viewModel(\.animation) == .initial)
+        
+        viewModel.action(.animation(.fill))
+        #expect(viewModel(\.animation) == .fill)
+        
     }
 }
 
@@ -65,13 +72,20 @@ public class LingShapeViewModel: GabReducer {
         
         public init () { }
         
-        private var timer = Timer.publish(every: 1.5, on: .main, in: .default)
+//        private var timer = Timer.publish(every: 1.5, on: .main, in: .default)
+        private var timer: Timer.TimerPublisher?
         private var cancellable: Cancellable?
         public var animation: AnimationMethod.Ling = .initial
+        public var speed: Double = .zero
     }
     
     public enum Action: Equatable {
         case animation(AnimationMethod.Ling)
+        
+        private enum Timer: Equatable {
+            case setSpeed(Double)
+            case setTimer
+        }
     }
     
     @Published private var state: State = .init()
