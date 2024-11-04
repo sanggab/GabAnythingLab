@@ -81,8 +81,9 @@ public class LingShapeViewModel: GabReducer {
     
     public enum Action: Equatable {
         case animation(AnimationMethod.Ling)
+        case timer(Action.Timer)
         
-        private enum Timer: Equatable {
+        public enum Timer: Equatable {
             case setSpeed(Double)
             case setTimer
         }
@@ -94,6 +95,18 @@ public class LingShapeViewModel: GabReducer {
         switch action {
         case .animation(let mode):
             update(\.animation, newValue: mode)
+        case .timer(let timerAC):
+            timerAction(timerAC)
+        }
+    }
+    
+    private func timerAction(_ action: Action.Timer) {
+        print("상갑 logEvent \(#function) action: \(action)")
+        switch action {
+        case .setSpeed(let double):
+            print("setSpeed")
+        case .setTimer:
+            print("setTimer")
         }
     }
 }
@@ -105,5 +118,9 @@ extension LingShapeViewModel {
     
     private func update<V>(_ keyPath: WritableKeyPath<State, V>, newValue: V) where V : Equatable {
         state[keyPath: keyPath] = newValue
+    }
+    
+    private func setTimer() {
+        
     }
 }
