@@ -37,6 +37,8 @@ extension GabAnythingLabTests {
         viewModel.action(.animation(.fill))
         #expect(viewModel(\.animation) == .fill)
         
+        viewModel.action(.timer(.setTimer))
+        #expect(viewModel(\.timerState.speed) == 1.5)
     }
 }
 
@@ -65,18 +67,42 @@ public extension AnimationMethod.Ling {
 }
 
 public class LingShapeViewModel: GabReducer {
-    public struct State: Equatable {
-        public static func == (lhs: LingShapeViewModel.State, rhs: LingShapeViewModel.State) -> Bool {
-            return lhs.animation == rhs.animation
+    
+    public struct TimerState: Equatable {
+        public static func == (lhs: LingShapeViewModel.TimerState, rhs: LingShapeViewModel.TimerState) -> Bool {
+            return lhs.speed == rhs.speed
         }
+        
+        init() {
+            
+        }
+        
+        private var timer: Timer.TimerPublisher?
+        private var cancellable: Cancellable?
+        public var speed: Double = .zero
+        
+        mutating public func setTimer() {
+            print("상갑 logEvent \(#function)")
+            self.timer = Timer.publish(every: self.speed, on: .main, in: .default)
+            self.cancellable = self.timer?.connect()
+        }
+        
+        mutating public func stopTimer() {
+            self.cancellable?.cancel()
+            self.timer = nil
+        }
+    }
+    
+    public struct State: Equatable {
+//        public static func == (lhs: LingShapeViewModel.State, rhs: LingShapeViewModel.State) -> Bool {
+//            return lhs.animation == rhs.animation
+//        }
         
         public init () { }
         
 //        private var timer = Timer.publish(every: 1.5, on: .main, in: .default)
-        private var timer: Timer.TimerPublisher?
-        private var cancellable: Cancellable?
         public var animation: AnimationMethod.Ling = .initial
-        public var speed: Double = .zero
+        public var timerState: TimerState = .init()
     }
     
     public enum Action: Equatable {
@@ -104,9 +130,13 @@ public class LingShapeViewModel: GabReducer {
         print("상갑 logEvent \(#function) action: \(action)")
         switch action {
         case .setSpeed(let double):
-            print("setSpeed")
+            update(\.timerState.speed, newValue: double)
         case .setTimer:
-            print("setTimer")
+            if self.state.timerState.speed == .zero {
+                self.timerAction(.setSpeed(1.5))
+            }
+            
+            setTimer()
         }
     }
 }
@@ -121,6 +151,6 @@ extension LingShapeViewModel {
     }
     
     private func setTimer() {
-        
+        self.state.timerState.setTimer()
     }
 }
