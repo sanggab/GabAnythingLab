@@ -21,6 +21,7 @@ struct LoadingAnimationView: View {
     @State private var degree = 0.0
     
     @State private var testCancellable: Cancellable?
+    @State private var any: Int?
     
     @State private var order: LoadingAnimationOrder = .none
     
@@ -31,9 +32,10 @@ struct LoadingAnimationView: View {
     }
     
     var body: some View {
-        LingShape()
-            .stroke(.mint, lineWidth: 5)
-            .frame(width: 100, height: 100)
+//        LingShape()
+//            .stroke(.mint, lineWidth: 5)
+//            .frame(width: 100, height: 100)
+        main2
     }
     
     
@@ -88,6 +90,7 @@ struct LoadingAnimationView: View {
                         clockwise: true)
         }
         .trim(from: order.trim.from, to: order.trim.to)
+        .stroke(.mint, lineWidth: 5)
         .animation(.easeInOut(duration: 1), value: order)
         .onAppear {
             setTimer()
@@ -99,13 +102,20 @@ struct LoadingAnimationView: View {
                 order = .two
             } else {
                 order = .none
+                cancellables.removeAll()
             }
         }
     }
     
     private func setTimer() {
         if testCancellable == nil {
-            testCancellable = self.timer.connect()
+//            testCancellable = self.timer.connect()
+            print("hoho")
+//            self.timer.sink { output in
+//                print("output2")
+//            }.store(in: &cancellables)
+            
+            self.timer.connect().store(in: &cancellables)
         } else {
             self.timer = Timer.publish(every: 1.5, on: .current, in: .default, options: nil)
             testCancellable = self.timer.connect()
