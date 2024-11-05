@@ -32,10 +32,10 @@ struct LoadingAnimationView: View {
     }
     
     var body: some View {
-//        LingShape()
-//            .stroke(.mint, lineWidth: 5)
-//            .frame(width: 100, height: 100)
-        main2
+        LingShape()
+            .stroke(.mint, lineWidth: 5)
+            .frame(width: 100, height: 100)
+//        main2
     }
     
     

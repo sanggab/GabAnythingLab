@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LingShape: Shape {
-//    @EnvironmentObject private var viewModel: LingShapeViewModel
+    @EnvironmentObject private var viewModel: LingShapeViewModel
     
     func path(in rect: CGRect) -> Path {
         let _ = print("상갑 logEvent \(#function) rect: \(rect)")
@@ -24,7 +24,7 @@ struct LingShape: Shape {
     }
 }
 
-#Preview {
+#Preview(traits: .lingShape) {
     LingShape()
         .stroke(.mint, lineWidth: 5)
         .frame(width: 100, height: 100)

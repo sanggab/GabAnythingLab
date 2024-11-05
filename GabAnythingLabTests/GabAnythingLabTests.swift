@@ -31,7 +31,7 @@ extension GabAnythingLabTests {
     @Test("LingShape Test")
     func lingShapeTest() async throws {
         print("상갑 logEvent \(#function)")
-        let viewModel = LingShapeViewModel()
+        let viewModel = TestLingShapeViewModel()
         
         try #require(viewModel(\.animation) == .initial)
         
@@ -56,7 +56,7 @@ extension GabAnythingLabTests {
 }
 
 
-public enum AnimationMethod: Equatable {
+public enum TestAnimationMethod: Equatable {
     public enum Ling: Equatable {
         public typealias LingTrim = (from: CGFloat, to: CGFloat)
         
@@ -66,7 +66,7 @@ public enum AnimationMethod: Equatable {
     }
 }
 
-public extension AnimationMethod.Ling {
+public extension TestAnimationMethod.Ling {
     var trim: LingTrim {
         switch self {
         case .initial:
@@ -79,19 +79,19 @@ public extension AnimationMethod.Ling {
     }
 }
 
-public class LingShapeViewModel: GabReducer {
+public class TestLingShapeViewModel: GabReducer {
     
     public struct TimerState: Equatable {
-        public static func == (lhs: LingShapeViewModel.TimerState, rhs: LingShapeViewModel.TimerState) -> Bool {
+        public static func == (lhs: TestLingShapeViewModel.TimerState, rhs: TestLingShapeViewModel.TimerState) -> Bool {
             return lhs.speed == rhs.speed ||
             lhs.cancellable == rhs.cancellable
         }
         
         init() {
-            
+            self.timer = Timer.publish(every: self.speed, on: .main, in: .default)
         }
         
-        public var timer: Timer.TimerPublisher?
+        public var timer: Timer.TimerPublisher
         private var cancellable: Set<AnyCancellable> = []
         public var speed: Double = .zero
         public var date: Date = .init()
@@ -100,13 +100,11 @@ public class LingShapeViewModel: GabReducer {
             print("상갑 logEvent \(#function)")
             // MARK: Timer의 autoConnect의 장점은 멀까 - 어차피 every의 시간마다 호출되서 View가 Draw될 때 바로 onReceive에 구독되는 것도 아닌데..
             self.timer = Timer.publish(every: self.speed, on: .main, in: .default)
-            self.timer?.connect().store(in: &cancellable)
+            self.timer.connect().store(in: &cancellable)
         }
         
         mutating public func stopTimer() {
             print("상갑 logEvent \(#function)")
-            // MARK: Timer를 nil 안해줘도 cancellable만 cancel 시켜도 타이머는 멈추긴 한다
-            self.timer = nil
             self.cancellable.removeAll()
         }
         
@@ -118,12 +116,12 @@ public class LingShapeViewModel: GabReducer {
     public struct State: Equatable {
         public init () { }
         
-        public var animation: AnimationMethod.Ling = .initial
+        public var animation: TestAnimationMethod.Ling = .initial
         public var timerState: TimerState = .init()
     }
     
     public enum Action: Equatable {
-        case animation(AnimationMethod.Ling)
+        case animation(TestAnimationMethod.Ling)
         case timer(Action.Timer)
         
         public enum Timer: Equatable {
@@ -162,7 +160,7 @@ public class LingShapeViewModel: GabReducer {
     }
 }
 
-extension LingShapeViewModel {
+extension TestLingShapeViewModel {
     public func callAsFunction<V>(_ keyPath: KeyPath<State, V>) -> V where V : Equatable {
         return state[keyPath: keyPath]
     }
