@@ -30,8 +30,17 @@ struct TestLing: View {
                 }
             }
             .onAppear {
-                viewModel.action(.timer(.setTimer))
+//                viewModel.action(.timer(.setTimer))
             }
+            .background(.orange)
+        
+        Button {
+            viewModel.action(.timer(.stopTimer))
+        } label: {
+            Text("멈춰")
+        }
+        .padding(.top, 20)
+
     }
 }
 
