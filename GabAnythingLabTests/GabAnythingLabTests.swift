@@ -48,10 +48,6 @@ extension GabAnythingLabTests {
         viewModel.action(.timer(.stopTimer))
         
         #expect(viewModel(\.timerState).existCancellables() == false)
-        
-        try await Task.sleep(nanoseconds: 3_000_000_000)
-        
-        print(viewModel(\.timerState).date)
     }
 }
 
@@ -94,7 +90,6 @@ public class TestLingShapeViewModel: GabReducer {
         public var timer: Timer.TimerPublisher
         private var cancellable: Set<AnyCancellable> = []
         public var speed: Double = .zero
-        public var date: Date = .init()
         
         mutating public func setTimer() {
             print("상갑 logEvent \(#function)")

@@ -12,16 +12,26 @@ struct TestLing: View {
     
     var body: some View {
         LingShape()
-            .stroke(.mint, lineWidth: 5)
-            .frame(width: 100, height: 100)
+            .trim(from: viewModel(\.animation).trim.from, to: viewModel(\.animation).trim.to)
+//            .stroke(.mint, lineWidth: 5)
+            .stroke(.mint, style: StrokeStyle(lineWidth: 5, lineCap: .round))
+            .animation(.easeInOut(duration: viewModel(\.timerState).speed), value: viewModel(\.animation))
+            .frame(width: 20, height: 20)
             .onReceive(viewModel(\.timerState).timer) { output in
-                print(output)
+                let animation = viewModel(\.animation)
+                
+                switch animation {
+                case .initial:
+                    viewModel.action(.animation(.fill))
+                case .fill:
+                    viewModel.action(.animation(.empty))
+                case .empty:
+                    viewModel.action(.animation(.initial))
+                }
             }
             .onAppear {
                 viewModel.action(.timer(.setTimer))
-//                print(viewModel(\.timerState).existCancellables())
             }
-
     }
 }
 
