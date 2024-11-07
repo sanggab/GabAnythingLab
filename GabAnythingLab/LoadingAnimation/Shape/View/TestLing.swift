@@ -11,12 +11,12 @@ struct TestLing: View {
     @EnvironmentObject private var viewModel: LingShapeViewModel
     
     var body: some View {
-        LingShape()
+        RefreshShape()
             .trim(from: viewModel(\.animation).trim.from, to: viewModel(\.animation).trim.to)
 //            .stroke(.mint, lineWidth: 5)
             .stroke(.mint, style: StrokeStyle(lineWidth: 5, lineCap: .round))
             .animation(.easeInOut(duration: viewModel(\.timerState).speed), value: viewModel(\.animation))
-            .frame(width: 20, height: 20)
+            .frame(width: 50, height: 50)
             .onReceive(viewModel(\.timerState).timer) { output in
                 let animation = viewModel(\.animation)
                 
@@ -30,7 +30,7 @@ struct TestLing: View {
                 }
             }
             .onAppear {
-//                viewModel.action(.timer(.setTimer))
+                viewModel.action(.timer(.setTimer))
             }
             .background(.orange)
         

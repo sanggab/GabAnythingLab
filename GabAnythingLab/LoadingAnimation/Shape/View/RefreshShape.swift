@@ -7,7 +7,32 @@
 
 import SwiftUI
 
+struct RefreshMovePoint {
+    var x: CGFloat
+    var y: CGFloat
+    
+    static let `default` = RefreshMovePoint(x: .zero, y: .zero)
+    
+    init(x: CGFloat, y: CGFloat) {
+        self.x = x
+        self.y = y
+    }
+}
+
+struct RefreshAddLinePoint {
+    var x: CGFloat
+    var y: CGFloat
+    
+    static let `default` = RefreshAddLinePoint(x: .zero, y: .zero)
+    
+    init(x: CGFloat, y: CGFloat) {
+        self.x = x
+        self.y = y
+    }
+}
+
 struct RefreshShape: Shape {
+    typealias RefreshPoint = (Move: RefreshMovePoint, Add: RefreshAddLinePoint)
     @State private var degress: Double = .zero
     @State private var count: Double = .zero
     
@@ -16,89 +41,57 @@ struct RefreshShape: Shape {
     }
     
     func tailPath(in rect: CGRect) -> Path {
-        
-//        let angleRadians = angleDegress * .pi / 180
-//        let x = cos(angleRadians) * (rect.width / 2)
-//        let y = sin(angleRadians) * (rect.height / 2)
-//        let diagonal = self.getDiagonal(in: rect)
-        
         return Path { path in
-            for i in 0..<3 {
-                print("상갑 logEvent \(#function) index: \(i)")
-                let a = pow(rect.width / 2, 2)
-                let b = pow(rect.height / 2, 2)
-                let sqrt = sqrt(a + b)
-                print("상갑 logEvent \(#function) sqrt: \(sqrt)")
-                let degress: Double = Double(45 * i)
-                let radians = degress * .pi / 180
-                print("상갑 logEvent \(#function) degress: \(degress)")
-                print("상갑 logEvent \(#function) radians: \(radians)")
-                let x = (rect.width / 2) * cos(radians) + (rect.width / 2)
-                let y = (rect.height / 2) * sin(radians) + (rect.height / 2)
+            for i in 0..<8 {
+                let refreshPoint = getRadius(in: rect, path: path, index: i)
+                let movePoint = refreshPoint.Move
+                let addPoint = refreshPoint.Add
                 
-                print("상갑 logEvent \(#function) x: \(x)")
-                print("상갑 logEvent \(#function) y: \(y)")
+                path.move(to: CGPoint(x: movePoint.x,
+                                      y: movePoint.y))
                 
-                
-                path.addArc(center: CGPoint(x: rect.width / 2, y: rect.height / 2),
-                            radius: rect.width / 2,
-                            startAngle: .degrees(.zero),
-                            endAngle: .degrees(90),
-                            clockwise: false)
-                
-                path.move(to: CGPoint(x: x,
-                                      y: y))
-                
-                let radius = getRadius(in: rect, degress: degress, sqrt: sqrt)
-                
-                path.addLine(to: CGPoint(x: (path.currentPoint?.x ?? .zero) + radius.0,
-                                         y: (path.currentPoint?.y ?? .zero) + radius.1))
-                
+                path.addLine(to: CGPoint(x: addPoint.x,
+                                         y: addPoint.y))
             }
-            
         }
     }
     
-    func getRadius(in rect: CGRect, degress: Double, sqrt: Double) -> (CGFloat, CGFloat) {
-        switch degress {
-        case 0:
-            return (rect.width / 2, .zero)
-        case 45:
-            return (rect.width / 2 , rect.height / 2)
-        case 90:
-            return (.zero, rect.height / 2)
-        case 135:
-            return (-(rect.width / 2), rect.height / 2)
-        case 180:
-            return (-(rect.width / 2), .zero)
-        case 225:
-            return (-(rect.width / 2), -(rect.height / 2))
-        case 270:
-            return (.zero, -(rect.height / 2))
-        case 315:
-            return (rect.width / 2, -(rect.height / 2))
-        default:
-            return (rect.width / 2, rect.height / 2)
-        }
-    }
-}
-
-private extension RefreshShape {
-    func getDiagonal(in rect: CGRect) -> Double {
-        let x = pow(rect.width / 2, 2)
-        let y = pow(rect.height / 2, 2)
+    func getRadius(in rect: CGRect, path: Path, index: Int) -> RefreshPoint {
+        let degress: Double = Double(45 * index)
+        let radians = degress * .pi / 180
         
-        return sqrt(x + y)
+        let movePoint = makeRefreshMovePoint(in: rect, radians: radians)
+        let addLinePoint = makeRefreshAddLinePoint(in: rect, radians: radians
+                                                   , movePoint: movePoint)
+        return (movePoint, addLinePoint)
     }
     
-//    func get
+    private func makeRefreshMovePoint(in rect: CGRect, radians: Double) -> RefreshMovePoint {
+        let x = (rect.width / 2) + ((rect.width / 2) * cos(radians))
+        let y = (rect.height / 2) + ((rect.height / 2) * sin(radians))
+        
+        return RefreshMovePoint(x: x,
+                                y: y)
+    }
+    
+    private func makeRefreshAddLinePoint(in rect: CGRect, radians: Double, movePoint: RefreshMovePoint) -> RefreshAddLinePoint {
+        let moveX = movePoint.x
+        let moveY = movePoint.y
+        
+        let x = moveX + ((rect.width / 2) * cos(radians))
+        let y = moveY + ((rect.height / 2) * sin(radians))
+        
+        return RefreshAddLinePoint(x: x,
+                                   y: y)
+    }
+    
 }
 
 #Preview {
     RefreshShape()
-        .stroke(.mint, style: StrokeStyle(lineWidth: 1,
-                                          lineCap: .butt,
-                                          lineJoin: .bevel))
+        .stroke(.mint, style: StrokeStyle(lineWidth: 5,
+                                          lineCap: .round,
+                                          lineJoin: .round))
         .frame(width: 50, height: 50)
         .background(.orange)
 }
