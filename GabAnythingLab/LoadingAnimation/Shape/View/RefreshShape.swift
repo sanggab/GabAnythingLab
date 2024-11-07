@@ -33,8 +33,6 @@ struct RefreshAddLinePoint {
 
 struct RefreshShape: Shape {
     typealias RefreshPoint = (Move: RefreshMovePoint, Add: RefreshAddLinePoint)
-    @State private var degress: Double = .zero
-    @State private var count: Double = .zero
     
     func path(in rect: CGRect) -> Path {
         tailPath(in: rect)
@@ -60,9 +58,13 @@ struct RefreshShape: Shape {
         let degress: Double = Double(45 * index)
         let radians = degress * .pi / 180
         
-        let movePoint = makeRefreshMovePoint(in: rect, radians: radians)
-        let addLinePoint = makeRefreshAddLinePoint(in: rect, radians: radians
-                                                   , movePoint: movePoint)
+        let movePoint = makeRefreshMovePoint(in: rect,
+                                             radians: radians)
+        
+        let addLinePoint = makeRefreshAddLinePoint(in: rect,
+                                                   radians: radians,
+                                                   movePoint: movePoint)
+        
         return (movePoint, addLinePoint)
     }
     
@@ -92,6 +94,6 @@ struct RefreshShape: Shape {
         .stroke(.mint, style: StrokeStyle(lineWidth: 5,
                                           lineCap: .round,
                                           lineJoin: .round))
-        .frame(width: 50, height: 50)
-        .background(.orange)
+        .frame(width: 10, height: 10)
+//        .background(.orange)
 }

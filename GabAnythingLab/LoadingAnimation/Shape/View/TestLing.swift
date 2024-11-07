@@ -12,9 +12,9 @@ struct TestLing: View {
     
     var body: some View {
         RefreshShape()
+//        LingShape()
             .trim(from: viewModel(\.animation).trim.from, to: viewModel(\.animation).trim.to)
-//            .stroke(.mint, lineWidth: 5)
-            .stroke(.mint, style: StrokeStyle(lineWidth: 5, lineCap: .round))
+            .stroke(.black, style: StrokeStyle(lineWidth: 5, lineCap: .round))
             .animation(.easeInOut(duration: viewModel(\.timerState).speed), value: viewModel(\.animation))
             .frame(width: 50, height: 50)
             .onReceive(viewModel(\.timerState).timer) { output in
@@ -32,7 +32,12 @@ struct TestLing: View {
             .onAppear {
                 viewModel.action(.timer(.setTimer))
             }
-            .background(.orange)
+//            .background {
+//                RefreshShape()
+//                    .stroke(.gray.opacity(0.5), style: StrokeStyle(lineWidth: 5, lineCap: .round))
+//                    .frame(width: 50, height: 50)
+//            }
+//            .background(.orange)
         
         Button {
             viewModel.action(.timer(.stopTimer))

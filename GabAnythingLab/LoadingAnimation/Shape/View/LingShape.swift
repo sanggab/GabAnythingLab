@@ -18,9 +18,11 @@ struct LingShape: Shape {
             path.addArc(center: CGPoint(x: rect.midX,
                                         y: rect.midY),
                         radius: rect.width / 2,
-                        startAngle: .degrees(0),
-                        endAngle: .degrees(360),
-                        clockwise: true)
+                        startAngle: .degrees(270),
+                        endAngle: .degrees(-90),
+                        clockwise: false)
+            
+//            path.closeSubpath()
         }
     }
 }

@@ -79,7 +79,7 @@ public class LingShapeViewModel: GabReducer {
         case .setSpeed(let double):
             update(\.timerState.speed, newValue: double)
         case .setTimer:
-            if self.state.timerState.speed == .zero {
+            if self(\.timerState).speed == .zero {
                 self.timerAction(.setSpeed(1.5))
             }
             
