@@ -11,11 +11,23 @@ struct TestLing: View {
     @EnvironmentObject private var viewModel: LingShapeViewModel
     
     var body: some View {
+        
+        Button {
+            viewModel.action(.timer(.stopTimer))
+        } label: {
+            Text("멈춰")
+        }
+        .padding(.top, 20)
+
+    }
+    
+    @ViewBuilder
+    var saveView: some View {
         RefreshShape()
 //        LingShape()
             .trim(from: viewModel(\.animation).trim.from, to: viewModel(\.animation).trim.to)
-            .stroke(.black, style: StrokeStyle(lineWidth: 5, lineCap: .round))
-            .animation(.easeInOut(duration: viewModel(\.timerState).speed), value: viewModel(\.animation))
+            .stroke(.black, style: StrokeStyle(lineWidth: 5, lineCap: .butt))
+//            .animation(.easeInOut(duration: viewModel(\.timerState).speed), value: viewModel(\.animation))
             .frame(width: 50, height: 50)
             .onReceive(viewModel(\.timerState).timer) { output in
                 let animation = viewModel(\.animation)
@@ -30,7 +42,8 @@ struct TestLing: View {
                 }
             }
             .onAppear {
-                viewModel.action(.timer(.setTimer))
+//                viewModel.action(.timer(.setSpeed(0.2)))
+//                viewModel.action(.timer(.setTimer))
             }
 //            .background {
 //                RefreshShape()
@@ -38,14 +51,6 @@ struct TestLing: View {
 //                    .frame(width: 50, height: 50)
 //            }
 //            .background(.orange)
-        
-        Button {
-            viewModel.action(.timer(.stopTimer))
-        } label: {
-            Text("멈춰")
-        }
-        .padding(.top, 20)
-
     }
 }
 

@@ -108,21 +108,35 @@ public class TestLingShapeViewModel: GabReducer {
         }
     }
     
+    public struct WingState: Equatable {
+        public init() { }
+        
+        public var angle: Double = 45.0
+        public var color: Color = .black
+    }
+    
     public struct State: Equatable {
         public init () { }
         
         public var animation: TestAnimationMethod.Ling = .initial
         public var timerState: TimerState = .init()
+        public var wingState: WingState = .init()
     }
     
     public enum Action: Equatable {
         case animation(TestAnimationMethod.Ling)
         case timer(Action.Timer)
+        case wing(Action.Wing)
         
         public enum Timer: Equatable {
             case setSpeed(Double)
             case setTimer
             case stopTimer
+        }
+        
+        public enum Wing: Equatable {
+            case setAngle(Double)
+            case setColor(Color)
         }
     }
     
@@ -135,6 +149,8 @@ public class TestLingShapeViewModel: GabReducer {
             update(\.animation, newValue: mode)
         case .timer(let timerAC):
             timerAction(timerAC)
+        case .wing(let wingAC):
+            wingAction(wingAC)
         }
     }
     
@@ -151,6 +167,16 @@ public class TestLingShapeViewModel: GabReducer {
             setTimer()
         case .stopTimer:
             stopTimer()
+        }
+    }
+    
+    private func wingAction(_ action: Action.Wing) {
+        print("상갑 logEvent \(#function) action: \(action)")
+        switch action {
+        case .setAngle(let double):
+            update(\.wingState.angle, newValue: double)
+        case .setColor(let color):
+            update(\.wingState.color, newValue: color)
         }
     }
 }

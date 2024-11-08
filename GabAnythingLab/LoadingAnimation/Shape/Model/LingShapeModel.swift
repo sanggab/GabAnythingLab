@@ -21,11 +21,11 @@ public extension AnimationMethod.Ling {
     var trim: LingTrim {
         switch self {
         case .initial:
-            return (from: 0, to: 0)
+            return (from: 0, to: 0.5)
         case .fill:
-            return (from: 0, to: 1)
+            return (from: 0.125, to: 0.625)
         case .empty:
-            return (from: 1, to: 1)
+            return (from: 0.25, to: 0.75)
         }
     }
 }

@@ -7,33 +7,7 @@
 
 import SwiftUI
 
-struct RefreshMovePoint {
-    var x: CGFloat
-    var y: CGFloat
-    
-    static let `default` = RefreshMovePoint(x: .zero, y: .zero)
-    
-    init(x: CGFloat, y: CGFloat) {
-        self.x = x
-        self.y = y
-    }
-}
-
-struct RefreshAddLinePoint {
-    var x: CGFloat
-    var y: CGFloat
-    
-    static let `default` = RefreshAddLinePoint(x: .zero, y: .zero)
-    
-    init(x: CGFloat, y: CGFloat) {
-        self.x = x
-        self.y = y
-    }
-}
-
 struct RefreshShape: Shape {
-    typealias RefreshPoint = (Move: RefreshMovePoint, Add: RefreshAddLinePoint)
-    
     func path(in rect: CGRect) -> Path {
         tailPath(in: rect)
     }
@@ -54,7 +28,7 @@ struct RefreshShape: Shape {
         }
     }
     
-    func getRadius(in rect: CGRect, path: Path, index: Int) -> RefreshPoint {
+    func getRadius(in rect: CGRect, path: Path, index: Int) -> IndicatorCalculationInterface.RefreshPoint {
         let degress: Double = Double(45 * index)
         let radians = degress * .pi / 180
         
@@ -94,6 +68,6 @@ struct RefreshShape: Shape {
         .stroke(.mint, style: StrokeStyle(lineWidth: 5,
                                           lineCap: .round,
                                           lineJoin: .round))
-        .frame(width: 10, height: 10)
+        .frame(width: 50, height: 50)
 //        .background(.orange)
 }

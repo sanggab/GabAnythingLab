@@ -16,14 +16,14 @@ public class LingShapeViewModel: GabReducer {
             lhs.cancellable == rhs.cancellable
         }
         
-        init() {
+        public init() {
             self.timer = Timer.publish(every: self.speed, on: .main, in: .default)
         }
         
-        public var timer: Timer.TimerPublisher!
         private var cancellable: Set<AnyCancellable> = []
+        
+        public var timer: Timer.TimerPublisher!
         public var speed: Double = .zero
-        public var date: Date = .init()
         
         mutating public func setTimer() {
             print("상갑 logEvent \(#function)")
