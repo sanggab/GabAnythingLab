@@ -126,6 +126,7 @@ public class TestLingShapeViewModel: GabReducer {
         public init() { }
         
         public var angle: Double = 45.0
+        public var rotateAngle: Double = 45.0
         public var color: Color = .black
     }
     
@@ -151,6 +152,7 @@ public class TestLingShapeViewModel: GabReducer {
         public enum Wing: Equatable {
             case setAngle(Double)
             case setColor(Color)
+            case setRotateAngle(Double)
         }
     }
     
@@ -191,6 +193,8 @@ public class TestLingShapeViewModel: GabReducer {
             update(\.wingState.angle, newValue: double)
         case .setColor(let color):
             update(\.wingState.color, newValue: color)
+        case .setRotateAngle(let angle):
+            update(\.wingState.rotateAngle, newValue: angle)
         }
     }
 }

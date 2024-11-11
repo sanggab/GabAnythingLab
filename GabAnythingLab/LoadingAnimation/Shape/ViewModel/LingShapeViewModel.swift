@@ -48,6 +48,7 @@ public class LingShapeViewModel: GabReducer {
         
         public var angle: Double = 45.0
         public var color: Color = .black
+        var rotateAngle: Double = 45.0
     }
     
     public struct State: Equatable {
@@ -72,6 +73,7 @@ public class LingShapeViewModel: GabReducer {
         public enum Wing: Equatable {
             case setAngle(Double)
             case setColor(Color)
+            case setRotateAngle(Double)
         }
     }
     
@@ -110,8 +112,13 @@ public class LingShapeViewModel: GabReducer {
         switch action {
         case .setAngle(let double):
             update(\.wingState.angle, newValue: double)
+            if double != self(\.wingState.rotateAngle) {
+                self.wingAction(.setRotateAngle(double))
+            }
         case .setColor(let color):
             update(\.wingState.color, newValue: color)
+        case .setRotateAngle(let angle):
+            update(\.wingState.rotateAngle, newValue: angle)
         }
     }
 }

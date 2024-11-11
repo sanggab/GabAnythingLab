@@ -15,29 +15,47 @@ struct IndicatorView: View {
     }
     
     var listCount: [Double] {
-        var list: [Double] = []
-        for i in 0..<wingCount {
-            list.append(viewModel(\.wingState.angle) * Double(i))
+        get {
+            var list: [Double] = []
+            for i in 0..<wingCount {
+                list.append(viewModel(\.wingState.angle) * Double(i))
+            }
+            
+            return list
         }
-        
-        return list
     }
     
+
     var body: some View {
         ZStack {
             ForEach(0..<wingCount, id: \.self) { index in
-                IndicatorWingShape(degress: viewModel(\.wingState.angle) * Double(index))
+                IndicatorWingShape(degress: viewModel(\.wingState.angle) * Double(index) + viewModel(\.wingState.rotateAngle))
                     .stroke(style: StrokeStyle(lineWidth: 2,
                                                lineCap: .round,
                                                lineJoin: .round))
                     .frame(width: 50, height: 50)
 //                    .animation(.easeInOut(duration: 0.5).repeatForever(), value: viewModel(\.wingState.angle))
-                    .opacity(1 / Double(index))
+                    .opacity(1 / Double(index + 1))
+                    .onAppear {
+                        print("상갑 logEvent \(#function) index: \(index)")
+                        print("상갑 logEvent \(#function) opacity: \(1 / Double(index + 1))")
+                    }
 //                    .rotationEffect(.degrees(360))
             }
         }
         .onReceive(viewModel(\.timerState).timer) { output in
+            var currentAngle = viewModel(\.wingState.rotateAngle)
+            if currentAngle == 360.0 {
+                currentAngle = 0.0
+            } else {
+                currentAngle += viewModel(\.wingState.angle)
+            }
             
+            viewModel.action(.wing(.setRotateAngle(currentAngle)))
+        }
+        .onAppear {
+            print("상갑 logEvent \(#function) onAppear")
+            viewModel.action(.wing(.setAngle(15)))
         }
         
         Button {
@@ -45,9 +63,13 @@ struct IndicatorView: View {
 //            withAnimation {
 //                viewModel.action(.wing(.setAngle(15)))
 //            }
-            
-            viewModel.action(.timer(.setSpeed(1)))
-            viewModel.action(.timer(.setTimer))
+            print(listCount)
+            if viewModel(\.timerState).existCancellables() {
+                viewModel.action(.timer(.stopTimer))
+            } else {
+                viewModel.action(.timer(.setSpeed(0.03)))
+                viewModel.action(.timer(.setTimer))
+            }
             
 //            withAnimation(.easeInOut(duration: 1).repeatForever(autoreverses: true)) {
 //                viewModel.action(.wing(.setAngle(30)))
