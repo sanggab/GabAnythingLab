@@ -33,7 +33,7 @@ struct IndicatorView: View {
                     .stroke(style: StrokeStyle(lineWidth: 2,
                                                lineCap: .round,
                                                lineJoin: .round))
-                    .frame(width: 50, height: 50)
+                    .frame(width: 10, height: 10)
 //                    .animation(.easeInOut(duration: 0.5).repeatForever(), value: viewModel(\.wingState.angle))
                     .opacity(getOpacity(index: index))
                     .onAppear {
@@ -55,8 +55,9 @@ struct IndicatorView: View {
             viewModel.action(.wing(.setRotateAngle(currentAngle)))
         }
         .onAppear {
+            
             print("상갑 logEvent \(#function) onAppear")
-            viewModel.action(.wing(.setAngle(12)))
+            viewModel.action(.wing(.setAngle(30)))
         }
         
         Button {
@@ -82,13 +83,21 @@ struct IndicatorView: View {
 
     }
     
+    /// 현재 wing의 degress를 결정짓는 요소
+    /// refresh Indicator 느낌을 줄려면
     func getDegress(index: Int) -> Double {
+        /// 원래대로 그린다면 정해지는 Angle
         let currentAngle = (viewModel(\.wingState.angle) * Double(index))
+        /// Timer에 의해 currentAngle에서 돌릴 Angle
         let rotateAngle = viewModel(\.wingState.rotateAngle)
+        /// Swift에서 Path를 이용해 각도를 계산하거나 addArc등 그릴 경우에, 0도는 3시방향이라 이것을 12시 방향으로 돌리기 위한 각도
+        let moveAngle = 90 + viewModel(\.wingState.angle)
         
-        return currentAngle + rotateAngle - 135
+        return currentAngle + rotateAngle - moveAngle
     }
     
+    /// Opacity를 구하는 method
+    /// d
     func getOpacity(index: Int) -> Double {
         if index == .zero {
             return 1.0
