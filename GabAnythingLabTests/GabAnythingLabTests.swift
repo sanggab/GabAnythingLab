@@ -49,6 +49,20 @@ extension GabAnythingLabTests {
         
         #expect(viewModel(\.timerState).existCancellables() == false)
     }
+    
+    @Test("WingShape Test")
+    func wingShapeTest() async throws {
+        print("상갑 logEvent \(#function)")
+        let viewModel = TestLingShapeViewModel()
+        
+        try #require(viewModel(\.wingState.angle) == 45.0)
+        
+        viewModel.action(.wing(.setAngle(90)))
+        #expect(viewModel(\.wingState.angle) == 90.0)
+        
+        viewModel.action(.wing(.setColor(.mint)))
+        #expect(viewModel(\.wingState.color) == .mint)
+    }
 }
 
 
