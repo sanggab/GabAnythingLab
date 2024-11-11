@@ -29,16 +29,17 @@ struct IndicatorView: View {
     var body: some View {
         ZStack {
             ForEach(0..<wingCount, id: \.self) { index in
-                IndicatorWingShape(degress: viewModel(\.wingState.angle) * Double(index) + viewModel(\.wingState.rotateAngle))
+                IndicatorWingShape(degress: getDegress(index: index))
                     .stroke(style: StrokeStyle(lineWidth: 2,
                                                lineCap: .round,
                                                lineJoin: .round))
                     .frame(width: 50, height: 50)
 //                    .animation(.easeInOut(duration: 0.5).repeatForever(), value: viewModel(\.wingState.angle))
-                    .opacity(1 / Double(index + 1))
+                    .opacity(getOpacity(index: index))
                     .onAppear {
                         print("상갑 logEvent \(#function) index: \(index)")
-                        print("상갑 logEvent \(#function) opacity: \(1 / Double(index + 1))")
+                        print("상갑 logEvent \(#function) degress: \(viewModel(\.wingState.angle) * Double(index) + viewModel(\.wingState.rotateAngle))")
+                        print("상갑 logEvent \(#function) opacity: \(getOpacity(index: index))")
                     }
 //                    .rotationEffect(.degrees(360))
             }
@@ -46,7 +47,7 @@ struct IndicatorView: View {
         .onReceive(viewModel(\.timerState).timer) { output in
             var currentAngle = viewModel(\.wingState.rotateAngle)
             if currentAngle == 360.0 {
-                currentAngle = 0.0
+                currentAngle = viewModel(\.wingState.angle)
             } else {
                 currentAngle += viewModel(\.wingState.angle)
             }
@@ -55,7 +56,7 @@ struct IndicatorView: View {
         }
         .onAppear {
             print("상갑 logEvent \(#function) onAppear")
-            viewModel.action(.wing(.setAngle(15)))
+            viewModel.action(.wing(.setAngle(12)))
         }
         
         Button {
@@ -67,7 +68,7 @@ struct IndicatorView: View {
             if viewModel(\.timerState).existCancellables() {
                 viewModel.action(.timer(.stopTimer))
             } else {
-                viewModel.action(.timer(.setSpeed(0.03)))
+                viewModel.action(.timer(.setSpeed(0.07)))
                 viewModel.action(.timer(.setTimer))
             }
             
@@ -79,6 +80,27 @@ struct IndicatorView: View {
         }
         .padding(.top, 20)
 
+    }
+    
+    func getDegress(index: Int) -> Double {
+        let currentAngle = (viewModel(\.wingState.angle) * Double(index))
+        let rotateAngle = viewModel(\.wingState.rotateAngle)
+        
+        return currentAngle + rotateAngle - 135
+    }
+    
+    func getOpacity(index: Int) -> Double {
+        if index == .zero {
+            return 1.0
+        } else {
+            if index > 0 && index <= (listCount.count / 2) {
+                return 0.25
+            } else {
+                let sliceOpacity = 1 / Double(listCount.count)
+                
+                return sliceOpacity * Double(index)
+            }
+        }
     }
 }
 
