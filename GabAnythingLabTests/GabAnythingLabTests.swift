@@ -191,6 +191,9 @@ public class TestLingShapeViewModel: GabReducer {
         switch action {
         case .setAngle(let double):
             update(\.wingState.angle, newValue: double)
+            if double != self(\.wingState.rotateAngle) {
+                self.wingAction(.setRotateAngle(double))
+            }
         case .setColor(let color):
             update(\.wingState.color, newValue: color)
         case .setRotateAngle(let angle):

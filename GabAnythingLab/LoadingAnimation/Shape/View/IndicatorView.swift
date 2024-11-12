@@ -30,10 +30,10 @@ struct IndicatorView: View {
         ZStack {
             ForEach(0..<wingCount, id: \.self) { index in
                 IndicatorWingShape(degress: getDegress(index: index))
-                    .stroke(style: StrokeStyle(lineWidth: 2,
+                    .stroke(style: StrokeStyle(lineWidth: 5,
                                                lineCap: .round,
                                                lineJoin: .round))
-                    .frame(width: 10, height: 10)
+                    .frame(width: 40, height: 40)
 //                    .animation(.easeInOut(duration: 0.5).repeatForever(), value: viewModel(\.wingState.angle))
                     .opacity(getOpacity(index: index))
                     .onAppear {
@@ -69,7 +69,7 @@ struct IndicatorView: View {
             if viewModel(\.timerState).existCancellables() {
                 viewModel.action(.timer(.stopTimer))
             } else {
-                viewModel.action(.timer(.setSpeed(0.07)))
+                viewModel.action(.timer(.setSpeed(0.05)))
                 viewModel.action(.timer(.setTimer))
             }
             
@@ -115,4 +115,5 @@ struct IndicatorView: View {
 
 #Preview(traits: .lingShape) {
     IndicatorView()
+        .foregroundStyle(.red)
 }

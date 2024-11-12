@@ -100,7 +100,6 @@ public class LingShapeViewModel: GabReducer {
             if self(\.timerState).speed == .zero {
                 self.timerAction(.setSpeed(1.5))
             }
-            
             setTimer()
         case .stopTimer:
             stopTimer()

@@ -48,7 +48,7 @@ struct LoadingAnimationView: View {
             .onReceive(timer) { _ in
                 if count >= 1 {
                     count = .zero
-                    testCancellable?.cancel()
+//                    testCancellable?.cancel()
                     return
                 }
                 
@@ -102,7 +102,7 @@ struct LoadingAnimationView: View {
                 order = .two
             } else {
                 order = .none
-                cancellables.removeAll()
+//                cancellables.removeAll()
             }
         }
     }
