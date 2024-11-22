@@ -1,0 +1,15 @@
+{
+  "originHash" : "baef6353f4703aedd342942130a5035db0daeeb22ca570814f42bb132fa3895f",
+  "pins" : [
+    {
+      "identity" : "swiftui-textview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sanggab/swiftui-textView.git",
+      "state" : {
+        "revision" : "e54c54d2e4bb981830ddfeff5a8116ed9df05193",
+        "version" : "2.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}

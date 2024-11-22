@@ -195,6 +195,9 @@
 			);
 			mainGroup = EF343C4D2CC8B6AF00D12F2F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EF36A7282CE47D1600D0F499 /* XCRemoteSwiftPackageReference "swiftui-textView" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EF343C572CC8B6AF00D12F2F /* Products */;
 			projectDirPath = "";
@@ -558,6 +561,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EF36A7282CE47D1600D0F499 /* XCRemoteSwiftPackageReference "swiftui-textView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sanggab/swiftui-textView.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = EF343C4E2CC8B6AF00D12F2F /* Project object */;
 }
