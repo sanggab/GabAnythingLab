@@ -85,6 +85,7 @@ struct IndicatorView: View {
     
     /// 현재 wing의 degress를 결정짓는 요소
     /// refresh Indicator 느낌을 줄려면
+    /// 첫 시작이 무조건 12시로 고정되버려서 angle이 360에 정확히 안떨어지는 소수점이 나올 경우 이상해짐.. 요거 수정해야됨
     func getDegress(index: Int) -> Double {
         /// 원래대로 그린다면 정해지는 Angle
         let currentAngle = (viewModel(\.wingState.angle) * Double(index))
@@ -97,7 +98,6 @@ struct IndicatorView: View {
     }
     
     /// Opacity를 구하는 method
-    /// d
     func getOpacity(index: Int) -> Double {
         if index == .zero {
             return 1.0
