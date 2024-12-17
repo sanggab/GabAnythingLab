@@ -63,6 +63,12 @@ extension GabAnythingLabTests {
         viewModel.action(.wing(.setColor(.mint)))
         #expect(viewModel(\.wingState.color) == .mint)
     }
+    
+    @Test("etc Test")
+    func etcTest() async throws {
+        var list = [1, 2, 3, 4]
+        list.insert(10, at: list.endIndex)
+    }
 }
 
 
