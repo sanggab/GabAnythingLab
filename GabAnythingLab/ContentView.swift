@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isOn: Bool = false
+    
     var body: some View {
 //        LoadingAnimationView()
         ContentTransition()
