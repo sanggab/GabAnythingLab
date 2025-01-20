@@ -17,13 +17,13 @@ struct HoneyAlignment: View {
                     .fill(.mint)
                     .frame(width: 68, height: 68)
                 
-                Circle()
-                    .fill(.blue)
-                    .frame(width: 76, height: 76)
-                    .padding(.horizontal, 8)
-                    .onTapGesture {
-                        isOn.toggle()
-                    }
+//                Circle()
+//                    .fill(.blue)
+//                    .frame(width: 76, height: 76)
+//                    .padding(.horizontal, 8)
+//                    .onTapGesture {
+//                        isOn.toggle()
+//                    }
                 
                 Circle()
                     .fill(.yellow)
@@ -35,7 +35,8 @@ struct HoneyAlignment: View {
                 Circle()
                     .fill(.gray.opacity(0.5))
                     .frame(width: 68, height: 68)
-                    .padding(.trailing, 152 + 8 + 136)
+//                    .padding(.trailing, 152 + 8 + 136)
+                    .padding(.trailing, 68 * 3 + 8)
             }
             .padding(.bottom, 20)
         }
