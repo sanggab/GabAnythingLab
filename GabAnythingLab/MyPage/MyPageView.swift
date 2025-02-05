@@ -23,6 +23,7 @@ struct MyPageView: View {
                 Image(systemName: "gearshape")
             }
             .frame(height: 50)
+            .padding(.horizontal)
             
             ScrollView(showsIndicators: false) {
                 ZStack {
@@ -40,6 +41,12 @@ struct MyPageView: View {
                         Spacer().frame(height: 16)
                         
                         InfinityScrollView()
+                        
+                        Spacer().frame(height: 16)
+                        
+                        ItemAreaView()
+                            .frame(height: 150)
+                            .padding(.horizontal)
                     }
                 }
             }
