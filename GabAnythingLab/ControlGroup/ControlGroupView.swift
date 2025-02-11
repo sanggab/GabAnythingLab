@@ -12,33 +12,25 @@ struct ControlGroupView: View {
         VStack {
 //            Menu {
 //                
-//                ControlGroup {
-//                    Button {
-//                        print("반갑소")
-//                    } label: {
-//                        Label("Button 1", systemImage: "pencil.tip.crop.circle.badge.plus")
-//                    }
-//                    
-//                    Button {
-//                        print("반갑소")
-//                    } label: {
-//                        Label("Button 2", systemImage: "doc")
-//                    }
-//                }
+                ControlGroup {
+                    Button {
+                        print("반갑소")
+                    } label: {
+                        Label("Button 1", systemImage: "pencil.tip.crop.circle.badge.plus")
+                    }
+                    
+                    Button {
+                        print("반갑소")
+                    } label: {
+                        Label("Button 2", systemImage: "doc")
+                    }
+                }
 //
 //                
 //            } label: {
 //                Label("dd", systemImage: "ellipsis.circle")
 //            }
             
-            ControlGroup {
-                Text("hi")
-                
-                Text("hi2")
-                
-                Text("hi2")
-            }
-
         }
     }
 }
